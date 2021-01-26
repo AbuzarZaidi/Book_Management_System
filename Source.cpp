@@ -7,13 +7,14 @@
 #include<iomanip>
 using namespace std;
 
-class book{
+class book {
 	int bookId = 0;
 	string bookName = "";
 	float bookPrice = 0.0;
 public:
 	void getData();
-	void showData();
+	void showData(int, string);
+
 
 	friend void show_menu(book obj);
 };
@@ -40,7 +41,7 @@ int main()
 	char ch = '\0';
 	while (ch != 'y')
 	{
-		show_menu( ob1);
+		show_menu(ob1);
 		cout << "\nEnter y for close program else input any key to continue: " << endl;
 		cin >> ch;
 	}
@@ -73,13 +74,19 @@ void show_menu(book obj)
 		break;
 	case 2:
 		//output_from_user();
-		
-		obj.showData();
-		break;
-		/* case 3:
 
+		obj.showData(1, " ");
 		break;
-		case 4:
+	case 3:
+		string s = " ";
+		string search = "";
+		cin.ignore();
+		cout << "Enter search: " << endl;
+		getline(cin, search);
+		search.append(s);
+		obj.showData(2, search);
+		//break;
+		/*case 4:
 
 		break;*/
 
@@ -87,20 +94,21 @@ void show_menu(book obj)
 
 }
 
-void book::showData()
+void book::showData(int comp, string searc)
 {
+
 	system("cls");
+	cout << "\n                  --==========================--  Book Management System Menu  --==============================--\n\n" << endl;
+
 	cout << setw(12) << "id" << setw(19) << "name" << setw(21) << "price" << endl;
 	string myText = "";
-
-	//ifstream in("debit.txt");
 	ifstream in("books_information.txt", ios::in);
 	while (getline(in, myText)) {
 		string id = "";
 		int i = 1;
 		char c = '\0';
 		while (c != ' ') {
-			
+
 			id += myText[i];
 			c = myText[i];
 			i++;
@@ -119,10 +127,24 @@ void book::showData()
 		for (i; i < myText.length(); i++) {
 			price += myText[i];
 		}
+		if (comp == 1) {
+			cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+		}
+		else if (comp == 2)
+		{
 
-		
-		cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+
+			if (id == searc) {
+
+				cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+			}
+
+		}
+		else
+		{
+			cout << "Error! " << endl;
+		}
+
 	}
-
 	in.close();
 }
