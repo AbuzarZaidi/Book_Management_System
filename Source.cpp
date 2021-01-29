@@ -22,13 +22,14 @@ void book::getData()
 {
 	cout << "Enter Book id: " << endl;
 	cin >> bookId;
+	cout << "Enter Price of book: " << endl;
+	cin >> bookPrice;
 	cin.ignore();
 	cout << "Enter name of book: " << endl;
 	getline(cin, bookName);
-	cout << "Enter Price of book: " << endl;
-	cin >> bookPrice;
+
 	ofstream out("books_information.txt", ios::app);
-	out << " " << bookId << " " << bookName << " " << bookPrice << endl;
+	out << " " << bookId << " " << bookPrice << " " << bookName << endl;
 	out.close();
 }
 
@@ -72,41 +73,41 @@ void show_menu(book obj)
 	case 1:
 		//input_from_user();
 	{
-		obj.getData();
-		break;
+			  obj.getData();
+			  break;
 	}
 	case 2:
 		//output_from_user();
 	{
-		obj.showData(1, " ");
-		break;
+			  obj.showData(1, " ");
+			  break;
 	}
 	case 3:
 	{
-		string s = " ";
-		string search = "";
-		cin.ignore();
-		cout << "Enter ID to search: " << endl;
-		getline(cin, search);
-		search.append(s);
-		obj.showData(2, search);
-		break;
+			  string s = " ";
+			  string search = "";
+			  cin.ignore();
+			  cout << "Enter ID to search: " << endl;
+			  getline(cin, search);
+			  search.append(s);
+			  obj.showData(2, search);
+			  break;
 	}
-	//end of case 3
+		//end of case 3
 	case 4:
 	{
-		string d = " ";
-		string deleteData = "";
-		cin.ignore();
-		cout << "Enter ID to Delete: " << endl;
-		getline(cin, deleteData);
-		deleteData.append(d);
-		obj.showData(3, deleteData);
-		rename_remove();
-		break;
+			  string d = " ";
+			  string deleteData = "";
+			  cin.ignore();
+			  cout << "Enter ID to Delete: " << endl;
+			  getline(cin, deleteData);
+			  deleteData.append(d);
+			  obj.showData(3, deleteData);
+			  rename_remove();		  
+			  break;
 	}
-	//end of case 4
-	   //=======  
+  //end of case 4
+	 //=======  
 	case 5:
 		string Upd = " ";
 		string updateData = "";
@@ -117,7 +118,7 @@ void show_menu(book obj)
 		obj.showData(4, updateData);
 		rename_remove();
 		break;
-
+		
 	}
 }
 
@@ -127,7 +128,7 @@ void book::showData(int comp, string searc)
 	system("cls");
 	cout << "\n                  --==========================--  Book Management System Menu  --==============================--\n\n" << endl;
 
-	cout << setw(12) << "id" << setw(19) << "name" << setw(21) << "price" << endl;
+	cout << setw(12) << "id" << setw(19) <<  "price" << setw(21) <<"name" << endl;
 	string myText = "";
 	ofstream out1("temporary.txt", ios::app);
 	ifstream in("books_information.txt", ios::in);
@@ -142,63 +143,64 @@ void book::showData(int comp, string searc)
 			i++;
 		}
 
-		string name = "";
+		string price = "";
 		c = '\0';
 		while (c != ' ') {
-			name += myText[i];
+			price += myText[i];
 			c = myText[i];
 			i++;
 		}
 		//int balance = stoi(amount);
 		//cbalance += balance;
-		string price = "";
+		string name = "";
 		for (i; i < myText.length(); i++) {
-			price += myText[i];
+			name += myText[i];
 		}
 		if (comp == 1) {
-			cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+			cout << setw(12) << id << setw(20) << price << setw(25) << name << endl;
 		}
 		else if (comp == 2)
 		{
-			if (id == searc)
+			if (id == searc) 
 			{
 
-				cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+				cout << setw(12) << id << setw(20) << price << setw(25) << name << endl;
 			}
 
 		}
 		else if (comp == 3)
-		{
+			{
 			if (id == searc)
 			{
-				cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+				cout << setw(12) << id << setw(20) << price << setw(25) << name << endl;
 			}
 			else
-			{
-				out1 << " " << id << name << price << endl;
+				{
+				out1 << " " << id << price << name << endl;
+				}
 			}
-		}
 		else if (comp == 4)
 		{
 			if (id == searc)
 			{
-				cout << setw(12) << id << setw(20) << name << setw(20) << price << endl;
+				cout << setw(12) << id << setw(20) << price << setw(25) << name << endl;
 				cout << "This Bokk is going to be update." << endl;
 				int book_id = 0;
 				string book_name;
 				float book_price = 0.0;
 				cout << "Enter Book id: " << endl;
 				cin >> book_id;
+				
+				cout << "Enter Price of book: " << endl;
+				cin >> book_price;
 				cin.ignore();
 				cout << "Enter name of book: " << endl;
 				getline(cin, book_name);
-				cout << "Enter Price of book: " << endl;
-				cin >> book_price;
 
-				out1 << " " << book_id << " " << book_name << " " << book_price << endl;
+				out1 << " " << book_id << " " << book_price << " " << book_name << endl;
 				continue;
 			}
-			out1 << " " << id << name << price << endl;
+			out1 << " " << id << price << name << endl;
 		}
 	}
 	out1.close();
@@ -207,7 +209,7 @@ void book::showData(int comp, string searc)
 
 
 //rename/remove
-void rename_remove(void) {
+void rename_remove(void){
 	/*	Deletes the file if exists */
 	char filename[] = "books_information.txt";
 	if (remove(filename) != 0)
@@ -233,4 +235,4 @@ void rename_remove(void) {
 		cout << "Process Complete Successfully!" << endl;
 	}
 }
-//======================================================The End=================================
+//======================================================The End=======================================
